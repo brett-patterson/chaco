@@ -98,7 +98,7 @@ class RangeSelection(BaseUnifiedSelectionTool, _RangeSelection):
 
         if manager:
             if mask is not None:
-                manager.add_selection(id(self), mask)
+                manager.set_selection(id(self), mask)
             else:
                 manager.remove_selection(id(self))
 

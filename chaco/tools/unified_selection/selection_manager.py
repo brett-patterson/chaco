@@ -14,8 +14,8 @@ class SelectionManager(HasTraits):
     _selections = Dict
     selection_changed = Event
 
-    def add_selection(self, source_id, selection):
-        """ Add a selection to the manager.
+    def set_selection(self, source_id, selection):
+        """ Set a selection in the manager or add it if it doesn't exist.
 
         Parameters:
         -----------
