@@ -32,9 +32,9 @@ class RangeSelection(BaseUnifiedSelectionTool, _RangeSelection):
         """ Reimplemented property getter for `selection`.
 
         """
-        manager = self.get_manager()
-        if manager:
-            return self.tuple_from_mask(manager.get_selection(id(self)))
+        data_source = self.get_data_source()
+        if data_source:
+            return data_source.metadata.get(self.metadata_name)
         return None
 
     def _set_selection(self, val):
@@ -46,10 +46,11 @@ class RangeSelection(BaseUnifiedSelectionTool, _RangeSelection):
         old = None
 
         if data_source and manager:
-            old = data_source.metadata.get(self.metadata_name)
+            md = data_source.metadata
+            old = md.get(self.metadata_name)
 
             if val is not None:
-                data_source.metadata[self.metadata_name] = val
+                md[self.metadata_name] = val
 
                 data = data_source.get_data()
                 new_mask = np.zeros_like(data, dtype=bool)
@@ -95,7 +96,6 @@ class RangeSelection(BaseUnifiedSelectionTool, _RangeSelection):
 
         """
         manager = self.get_manager()
-
         if manager:
             if mask is not None:
                 manager.set_selection(id(self), mask)
@@ -119,7 +119,7 @@ class RangeSelection(BaseUnifiedSelectionTool, _RangeSelection):
 
         if data_source:
             data = data_source.get_data()
-            region = np.where(mask == True)[0]
+            region = np.where(mask == 1)[0]
 
             if not region.any():
                 return None
