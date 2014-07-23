@@ -16,8 +16,8 @@ class BaseUnifiedSelectionTool(HasTraits):
 
         Parameters:
         -----------
-        tool : Chaco tool
-            The tool to register.
+        manager : SelectionManager
+            The manager to register this tool with.
 
         """
         data_source = getattr(self.plot, self.axis, None)
